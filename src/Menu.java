@@ -58,8 +58,6 @@ class Menu {
     }
 
     public void drawMenu() {
-        papplet.background(0);
-
 //        papplet.fill(20, 20, 20);
 //        papplet.rect(xPlayfield, yPlayfield, playfieldWidth, playfieldHeight);
 

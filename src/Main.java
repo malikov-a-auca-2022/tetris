@@ -18,6 +18,7 @@ public class Main extends PApplet {
     }
 
     public void draw() {
+        background(0);
         gameplay.draw();
         menu.drawMenu();
     }

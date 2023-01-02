@@ -22,8 +22,17 @@ public class Gameplay {
                                          {1, 1, 0, 0}}, new int[] {255, 255, 0}, cellSize, papplet));
     }
 
+    private boolean hasNewFigure = false;
+
     public void draw() {
         Shape sh = shapes.getRandomShape();
-        pf.addShape(sh);
+        if(!hasNewFigure) {
+            pf.addShape(sh);
+            hasNewFigure = true;
+        } else if (papplet.frameCount % 60 == 0){
+            pf.moveDown();
+        } else {
+            pf.drawLastShape();
+        }
     }
 }

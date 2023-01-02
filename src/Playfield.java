@@ -4,6 +4,8 @@ public class Playfield {
     private boolean[][] playfield;
     private Menu menu;
     private PApplet papplet;
+    private Shape lastShape;
+    private float xLastShape, yLastShape;
 
     Playfield(Menu menu, PApplet papplet) {
         this.menu = menu;
@@ -12,19 +14,32 @@ public class Playfield {
     }
 
     public void addShape(Shape shape) {
+        lastShape = shape;
         for (int i = 0; i < shape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < shape.getSHAPE_WIDTH(); j++) {
                 playfield[i][3 + j] = shape.getShape()[i][j];
             }
         }
         papplet.pushMatrix();
-        papplet.translate(menu.getXPlayfield() + 3 * menu.getCellSize(), menu.getYPlayfieldActual());
+        xLastShape = menu.getXPlayfield() + 3 * menu.getCellSize();
+        yLastShape = menu.getYPlayfieldActual();
+        papplet.translate(xLastShape, yLastShape);
         shape.drawShape(shape.getColor());
         papplet.popMatrix();
     }
 
     public void moveDown() {
-
+        papplet.pushMatrix();
+        yLastShape += menu.getCellSize();
+        papplet.translate(xLastShape, yLastShape);
+        lastShape.drawShape(lastShape.getColor());
+        papplet.popMatrix();
+    }
+    public void drawLastShape() {
+        papplet.pushMatrix();
+        papplet.translate(xLastShape, yLastShape);
+        lastShape.drawShape(lastShape.getColor());
+        papplet.popMatrix();
     }
 
     public int highestPointAtX(int x) {

@@ -70,7 +70,7 @@ public class Shape {
         for (int i = 0; i < SHAPE_HEIGHT; i++) {
             for (int j = 0; j < SHAPE_WIDTH; j++) {
                 if (SHAPE[i][j]) {
-                    papplet.rect(cellSize * i, cellSize * j, cellSize, cellSize);
+                    papplet.rect(cellSize * j, cellSize * i, cellSize, cellSize);
                 }
             }
         }
