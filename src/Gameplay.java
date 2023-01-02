@@ -26,22 +26,22 @@ public class Gameplay {
                                          {0, 1, 1, 1}}, new int[]{128, 0, 128}, cellSize, papplet));
         shapes.add(new Shape(new int[][]{{0, 0, 1, 1},
                                          {0, 1, 1, 0}}, new int[]{0, 255, 0}, cellSize, papplet));
+        pf.addShape(shapes.getRandomShape());
     }
 
-    private boolean hasNewFigure = false;
+    private boolean hasNewFigure = true;
 
     public void draw() {
-        Shape sh = shapes.getRandomShape();
         if (!hasNewFigure) {
-            pf.addShape(sh);
+            pf.addShape(shapes.getRandomShape());
             hasNewFigure = true;
-        } else if (papplet.frameCount % 7 == 0 && pf.getLastShape().y < menu.HEIGHT_CELLS) {
+        } else if (papplet.frameCount % 15 == 0) {
             pf.moveDown();
-        } else {
-            pf.drawLastShape();
         }
-        if (pf.getLastShape().y == menu.HEIGHT_CELLS) {
-            sh = shapes.getRandomShape();
+        pf.drawPlayfield();
+        //pf.drawLastShape();
+
+        if (pf.lastShapeHasSurfaceBelow()) {
             hasNewFigure = false;
         }
     }

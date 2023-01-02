@@ -2,6 +2,7 @@ import processing.core.PApplet;
 
 public class Playfield {
     private boolean[][] playfield;
+    private int[][][] colorOfCell;
     private Menu menu;
     private PApplet papplet;
 
@@ -25,6 +26,7 @@ public class Playfield {
         this.menu = menu;
         this.papplet = papplet;
         playfield = new boolean[menu.getACTUAL_HEIGHT_CELLS()][menu.WIDTH_CELLS];
+        colorOfCell = new int[menu.getACTUAL_HEIGHT_CELLS()][menu.WIDTH_CELLS][3];
     }
 
     public void addShape(Shape shape) {
@@ -32,36 +34,82 @@ public class Playfield {
         for (int i = 0; i < shape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < shape.getSHAPE_WIDTH(); j++) {
                 playfield[i][3 + j] = shape.getShape()[i][j];
+                colorOfCell[i][3 + j] = shape.getColor();
             }
         }
-        papplet.pushMatrix();
+//        papplet.pushMatrix();
         xLastShape = menu.getXPlayfield() + 3 * menu.getCellSize();
-        lastShape.x = 3;
+        lastShape.xOnPlayfield = 3;
         yLastShape = menu.getYPlayfieldActual();
-        lastShape.y = 0;
-        papplet.translate(xLastShape, yLastShape);
-        shape.drawShape(shape.getColor());
-        papplet.popMatrix();
+        lastShape.yOnPlayfield = 0;
+//        papplet.translate(xLastShape, yLastShape);
+//        shape.drawShape(shape.getColor());
+//        papplet.popMatrix();
+    }
+
+    public void drawPlayfield() {
+        for(int i = 0; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
+            for (int j = 0; j < menu.WIDTH_CELLS; j++) {
+                if(playfield[i][j]) {
+                    papplet.pushMatrix();
+                    int[] rgb = colorOfCell[i][j];
+                    papplet.fill(rgb[0], rgb[1], rgb[2]);
+                    papplet.translate(menu.getXPlayfield(), menu.getYPlayfieldActual());
+                    float cellSize = menu.getCellSize();
+                    papplet.rect(cellSize * j, cellSize * i, cellSize, cellSize);
+                    papplet.popMatrix();
+                }
+            }
+        }
     }
 
     public void moveDown() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
-                playfield[lastShape.y][lastShape.x] = false;
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
+                    colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
+                }
             }
         }
-        papplet.pushMatrix();
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j] = true;
+                    colorOfCell[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j] = lastShape.getColor();
+                }
+            }
+        }
+//        papplet.fill(255);
+//        papplet.rect(xLastShape, yLastShape, menu.getCellSize() * 4f, menu.getCellSize() * 2);
+
+//        papplet.pushMatrix();
         yLastShape += menu.getCellSize();
-        lastShape.y++;
+        lastShape.yOnPlayfield++;
+//        papplet.translate(xLastShape, yLastShape);
+//        lastShape.drawShape(lastShape.getColor());
+//        papplet.popMatrix();
+    }
+
+    public void drawLastShape() {
+        papplet.fill(255);
+        papplet.rect(xLastShape, yLastShape, menu.getCellSize() * 4f, menu.getCellSize() * 2);
+        papplet.pushMatrix();
         papplet.translate(xLastShape, yLastShape);
         lastShape.drawShape(lastShape.getColor());
         papplet.popMatrix();
     }
-    public void drawLastShape() {
-        papplet.pushMatrix();
-        papplet.translate(xLastShape, yLastShape);
-        lastShape.drawShape(lastShape.getColor());
-        papplet.popMatrix();
+
+    public boolean lastShapeHasSurfaceBelow() {
+        for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
+            if (lastShape.getShape()[1][j]) {
+                if (lastShape.yOnPlayfield + 2 == menu.getACTUAL_HEIGHT_CELLS() ||
+                        playfield[lastShape.yOnPlayfield + 2][lastShape.xOnPlayfield + j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public int highestPointAtX(int x) {

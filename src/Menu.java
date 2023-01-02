@@ -53,7 +53,7 @@ class Menu {
         playfieldWidth = cellSize * WIDTH_CELLS;
         xPlayfield = (papplet.width - playfieldWidth) / 2f;
         yPlayfield = (papplet.height - playfieldHeight) / 2f;
-        yPlayfieldActual = yPlayfield - 2 * cellSize;
+        yPlayfieldActual = yPlayfield - 2f * cellSize;
         stroke = cellSize / 20f;
     }
 

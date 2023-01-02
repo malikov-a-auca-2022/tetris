@@ -28,7 +28,7 @@ public class Shape {
 
     private float cellSize;
     PApplet papplet;
-    public int x, y;
+    public int xOnPlayfield, yOnPlayfield;
 
 //    Shape(boolean[][] shape, int[] color, float cellSize, PApplet papplet) {
 //        this.papplet = papplet;
