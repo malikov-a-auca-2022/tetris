@@ -22,4 +22,8 @@ public class Main extends PApplet {
         gameplay.draw();
         menu.drawMenu();
     }
+
+    public void keyPressed() {
+        gameplay.keyPressed();
+    }
 }

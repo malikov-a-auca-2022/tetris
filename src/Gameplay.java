@@ -1,6 +1,6 @@
 import processing.core.*;
 
-public class Gameplay {
+public class Gameplay extends PApplet {
     private Shapes shapes = new Shapes();
     private PApplet papplet;
     private Menu menu;
@@ -35,7 +35,7 @@ public class Gameplay {
         if (!hasNewFigure) {
             pf.addShape(shapes.getRandomShape());
             hasNewFigure = true;
-        } else if (papplet.frameCount % 15 == 0) {
+        } else if (papplet.frameCount % 45 == 0) {
             pf.moveDown();
         }
         pf.drawPlayfield();
@@ -43,6 +43,15 @@ public class Gameplay {
 
         if (pf.lastShapeHasSurfaceBelow()) {
             hasNewFigure = false;
+        }
+    }
+
+    public void keyPressed() {
+        if(papplet.key == 'a' || papplet.key == 'A') {
+            pf.moveLeft();
+        }
+        if(papplet.key == 'd' || papplet.key == 'D') {
+            pf.moveRight();
         }
     }
 }

@@ -63,6 +63,14 @@ public class Shape {
             throw new RuntimeException("Wrong size of color array: size must be 3");
         }
         COLOR = color;
+
+        mostLeftPointOnBottom = mostLeftPointOnBottom();
+        mostLeftPoint = mostLeftPoint();
+        mostRightPointOnBottom = mostRightPointOnBottom();
+        mostRightPoint = mostRightPoint();
+
+        mostRightPointOnTop = mostRightPointOnTop();
+        mostLeftPointOnTop = mostLeftPointOnTop();
     }
 
     public void drawShape(int[] color) {
@@ -77,4 +85,54 @@ public class Shape {
         }
     }
 
+    public int mostLeftPointOnBottom, mostRightPointOnBottom;
+    public int mostLeftPointOnTop, mostRightPointOnTop;
+    public int mostLeftPoint, mostRightPoint;
+
+    private int mostLeftPointOnBottom() {
+        for(int i = 0; i < SHAPE_WIDTH; i++) {
+            if(SHAPE[1][i]) return i;
+        }
+        return -1;
+    }
+    private int mostRightPointOnBottom() {
+        for(int i = SHAPE_WIDTH - 1; i >= 0; i--) {
+            if(SHAPE[1][i]) return i;
+        }
+        return -1;
+    }
+    private int mostLeftPointOnTop() {
+        for (int i = 0; i < SHAPE_WIDTH; i++) {
+            if(SHAPE[0][i]) return i;
+        }
+        return 0;
+    }
+    private int mostRightPointOnTop() {
+        for (int i = SHAPE_WIDTH - 1; i >= 0; i--) {
+            if(SHAPE[0][i]) return i;
+        }
+        return -1;
+    }
+    private int mostLeftPoint() {
+        int min = 5;
+        for (int i = 0; i < SHAPE_HEIGHT; i++) {
+            for(int j = 0; j < SHAPE_WIDTH; j++) {
+                if(SHAPE[i][j]) {
+                    min = Math.min(min, j);
+                }
+            }
+        }
+        return min;
+    }
+    private int mostRightPoint() {
+        int min = SHAPE_WIDTH;
+        for (int i = 0; i < SHAPE_HEIGHT; i++) {
+            for (int j = SHAPE_WIDTH - 1; j >= 0; j--) {
+                if(SHAPE[i][j]) {
+                    min = Math.min(min, j);
+                }
+            }
+        }
+        return min;
+    }
 }
