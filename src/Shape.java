@@ -12,6 +12,7 @@ public class Shape {
         return SHAPE_HEIGHT;
     }
 
+    private int actualHeight; //I need to change indexes in loops
     private final int SHAPE_HEIGHT = 2;
 
     private final boolean[][] SHAPE;
@@ -65,14 +66,36 @@ public class Shape {
         COLOR = color;
 
         mostLeftPointOnBottom = mostLeftPointOnBottom();
-        mostLeftPoint = mostLeftPoint();
         mostRightPointOnBottom = mostRightPointOnBottom();
-        mostRightPoint = mostRightPoint();
 
-        mostRightPointOnTop = mostRightPointOnTop();
         mostLeftPointOnTop = mostLeftPointOnTop();
-    }
+        mostRightPointOnTop = mostRightPointOnTop();
 
+        mostLeftPoint = Math.min(mostLeftPointOnBottom, mostLeftPointOnTop);
+        mostRightPoint = Math.max(mostRightPointOnBottom, mostRightPointOnTop);
+
+        {
+            int counter = 0;
+            for (int i = 0; i < SHAPE_HEIGHT; i++) {
+                for (int j = 0; j < SHAPE_WIDTH; j++) {
+                    if(SHAPE[i][j]) {
+                        counter++;
+                        break;
+                    }
+                }
+            }
+            actualHeight = counter;
+        }
+    }
+    
+    public boolean hasCellsInThisRow(int y) {
+        if(y != 0 && y != 1) throw new RuntimeException("Invalid row number: it should either 0 or 1");
+        for (int i = 0; i < SHAPE_WIDTH; i++) {
+            if(SHAPE[y][i]) return true;
+        }
+        return false;
+    }
+    
     public void drawShape(int[] color) {
         papplet.fill(color[0], color[1], color[2]);
         papplet.noStroke();
