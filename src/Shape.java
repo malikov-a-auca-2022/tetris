@@ -8,7 +8,7 @@ public class Shape {
         return SHAPE_WIDTH;
     }
 
-    public int getSHAPE_HEIGHT() {
+    public int getSHAPE_HEIGHT() { //change so that stick will be of height 1
         return SHAPE_HEIGHT;
     }
 

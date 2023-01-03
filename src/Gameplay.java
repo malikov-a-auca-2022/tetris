@@ -14,44 +14,45 @@ public class Gameplay extends PApplet {
         float cellSize = menu.getCellSize();
         shapes.add(new Shape(new int[][]{{0, 1, 0, 0},
                                          {0, 1, 1, 1}}, new int[]{5, 41, 185}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 0, 0, 0},
                                          {1, 1, 1, 1}}, new int[]{0, 255, 255}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 0, 0, 1},
                                          {0, 1, 1, 1}}, new int[]{255, 165, 0}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 1, 1, 0},
                                          {0, 1, 1, 0}}, new int[]{255, 255, 0}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 1, 1, 0},
                                          {0, 0, 1, 1}}, new int[]{255, 0, 0}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 0, 1, 0},
                                          {0, 1, 1, 1}}, new int[]{128, 0, 128}, cellSize, papplet));
+
         shapes.add(new Shape(new int[][]{{0, 0, 1, 1},
                                          {0, 1, 1, 0}}, new int[]{0, 255, 0}, cellSize, papplet));
         pf.addShape(shapes.getRandomShape());
     }
 
-    private boolean hasNewFigure = true;
-
     public void draw() {
-        if (!hasNewFigure) {
+        if (pf.lastShapeHasSurfaceBelow()) {
             pf.addShape(shapes.getRandomShape());
-            hasNewFigure = true;
-        } else if (papplet.frameCount % 45 == 0) {
+        } else if (papplet.frameCount % 30 == 0) {
             pf.moveDown();
         }
         pf.drawPlayfield();
-        //pf.drawLastShape();
-
-        if (pf.lastShapeHasSurfaceBelow()) {
-            hasNewFigure = false;
-        }
     }
 
     public void keyPressed() {
-        if(papplet.key == 'a' || papplet.key == 'A') {
+        if (papplet.key == 'a' || papplet.key == 'A') {
             pf.moveLeft();
         }
-        if(papplet.key == 'd' || papplet.key == 'D') {
+        if (papplet.key == 'd' || papplet.key == 'D') {
             pf.moveRight();
+        }
+        if (papplet.key == 's' || papplet.key == 'S') {
+            pf.moveDown();
         }
     }
 }
