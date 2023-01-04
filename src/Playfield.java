@@ -134,18 +134,16 @@ public class Playfield {
 //            return;
 //        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) <= 0) {
-                return;
-            }
             if (!lastShape.hasCellsInRow(i)){
                 continue;
+            }
+            if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) <= 0) {
+                return;
             }
             if (playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) - 1]) {
                 return;
             }
         }
-//        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-//        }
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellsInRow(i)) continue;
@@ -178,17 +176,14 @@ public class Playfield {
 //            return;
 //        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if (!lastShape.hasCellsInRow(i)) continue;
+            if (!lastShape.hasCellsInRow(i)) {
+                continue;
+            }
             if (lastShape.xOnPlayfield + getLastShape().mostRightPointOnRow(i) >= menu.WIDTH_CELLS - 1) {
                 return;
             }
-        }
-        for (int i = 0; i < lastShape.getSHAPE_WIDTH(); i++) {
-            if (!lastShape.hasCellsInRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
-                if (playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + lastShape.mostRightPointOnRow(i) + 1]) {
-                    return;
-                }
+            if (playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + lastShape.mostRightPointOnRow(i) + 1]) {
+                return;
             }
         }
 
