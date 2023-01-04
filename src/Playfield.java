@@ -29,8 +29,8 @@ public class Playfield {
         colorOfCell = new int[menu.getACTUAL_HEIGHT_CELLS()][menu.WIDTH_CELLS][3];
     }
 
-    public void addShape(Shape shape) {
-        lastShape = shape;
+    public void addShape(Shape shape)  {
+        lastShape = (Shape) shape.clone();
         for (int i = 0; i < shape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < shape.getSHAPE_WIDTH(); j++) {
                 playfield[i][3 + j] = shape.getShape()[i][j];
@@ -61,7 +61,7 @@ public class Playfield {
 
     public void moveDown() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -70,7 +70,7 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j] = true;
@@ -87,7 +87,7 @@ public class Playfield {
             return true;
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     if(i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
@@ -105,7 +105,7 @@ public class Playfield {
 
     public void rotateLeft() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -123,7 +123,7 @@ public class Playfield {
 
     public void rotateRight() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -141,7 +141,7 @@ public class Playfield {
 
     public void rotate180() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -178,7 +178,7 @@ public class Playfield {
 
     public void moveLeft() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if (!lastShape.hasCellsInRow(i)){
+            if (!lastShape.hasCellInRow(i)){
                 continue;
             }
             if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) <= 0) {
@@ -190,7 +190,7 @@ public class Playfield {
         }
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -199,7 +199,7 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j - 1] = true;
@@ -214,7 +214,7 @@ public class Playfield {
 
     public void moveRight() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if (!lastShape.hasCellsInRow(i)) {
+            if (!lastShape.hasCellInRow(i)) {
                 continue;
             }
             if (lastShape.xOnPlayfield + getLastShape().mostRightPointOnRow(i) >= menu.WIDTH_CELLS - 1) {
@@ -226,7 +226,7 @@ public class Playfield {
         }
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
@@ -235,7 +235,7 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInRow(i)) continue;
+            if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j + 1] = true;
@@ -248,7 +248,7 @@ public class Playfield {
 
     }
 
-    public void restart(Shapes shapes) {
+    public void restart(Shapes shapes)  {
         for (int i = 0; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
             for (int j = 0; j < menu.WIDTH_CELLS; j++) {
                 playfield[i][j] = false;

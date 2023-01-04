@@ -1,6 +1,6 @@
 import processing.core.*;
 
-public class Shape {
+public class Shape implements Cloneable {
 
     private final int SHAPE_WIDTH = 4;
 
@@ -46,13 +46,21 @@ public class Shape {
         mostRightPoint = -1;
         mostLeftPoint = SHAPE_WIDTH;
         for (int i = 0; i < SHAPE_HEIGHT; i++) {
-            if (!hasCellsInRow(i)) continue;
+            if (!hasCellInRow(i)) continue;
             for (int j = 0; j < SHAPE_WIDTH; j++) {
                 if (SHAPE[i][j]) {
                     mostRightPoint = Math.max(mostRightPoint, j);
                     mostLeftPoint = Math.min(mostLeftPoint, j);
                 }
             }
+        }
+    }
+
+    public Object clone()  {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException exception) {
+            throw new RuntimeException("Clone Exception");
         }
     }
 
@@ -65,7 +73,8 @@ public class Shape {
         }
         return newArr;
     }
-    public boolean hasCellsInRow(int x) {
+
+    public boolean hasCellInRow(int x) {
         if(x < 0 || x > 3) throw new RuntimeException("Invalid row number: it should either 0 or 1");
         for (int i = 0; i < SHAPE_WIDTH; i++) {
             if(SHAPE[x][i]) return true;
