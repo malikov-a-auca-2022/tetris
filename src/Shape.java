@@ -14,7 +14,7 @@ public class Shape {
 
     private final int SHAPE_HEIGHT = 4;
 
-    private final boolean[][] SHAPE;
+    public boolean[][] SHAPE;
 
     public boolean[][] getShape() {
         return SHAPE;
@@ -38,12 +38,7 @@ public class Shape {
         if (shape.length != 4 || shape[0].length != 4) {
             throw new RuntimeException("Wrong size of shape: size must be [2][4]");
         }
-        SHAPE = new boolean[4][4];
-        for (int i = 0; i < SHAPE_HEIGHT; i++) {
-            for (int j = 0; j < SHAPE_WIDTH; j++) {
-                SHAPE[i][j] = shape[i][j] == 1;
-            }
-        }
+        SHAPE = intArrToBoolArr(shape);
         if (color.length != 3) throw new RuntimeException("Wrong size of color array: size must be 3");
 
         COLOR = color;
@@ -61,6 +56,15 @@ public class Shape {
         }
     }
 
+    public boolean[][] intArrToBoolArr(int[][] arr) {
+        boolean[][] newArr = new boolean[4][4];
+        for (int i = 0; i < SHAPE_HEIGHT; i++) {
+            for (int j = 0; j < SHAPE_WIDTH; j++) {
+                newArr[i][j] = arr[i][j] == 1;
+            }
+        }
+        return newArr;
+    }
     public boolean hasCellsInRow(int x) {
         if(x < 0 || x > 3) throw new RuntimeException("Invalid row number: it should either 0 or 1");
         for (int i = 0; i < SHAPE_WIDTH; i++) {

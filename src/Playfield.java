@@ -113,12 +113,12 @@ public class Playfield {
                 }
             }
         }
-        int oldXOnPlayfield = lastShape.xOnPlayfield;
-        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        lastShape = Rotation.rotateLeft(lastShape);
-        lastShape.xOnPlayfield = oldXOnPlayfield;
-        lastShape.yOnPlayfield = oldYOnPlayfield;
-        drawPlayfield();
+//        int oldXOnPlayfield = lastShape.xOnPlayfield;
+//        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        Rotation.rotateLeft(lastShape);
+//        lastShape.xOnPlayfield = oldXOnPlayfield;
+//        lastShape.yOnPlayfield = oldYOnPlayfield;
+//        drawPlayfield();
     }
 
     public void rotateRight() {
@@ -131,12 +131,12 @@ public class Playfield {
                 }
             }
         }
-        int oldXOnPlayfield = lastShape.xOnPlayfield;
-        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        lastShape = Rotation.rotateRight(lastShape);
-        lastShape.xOnPlayfield = oldXOnPlayfield;
-        lastShape.yOnPlayfield = oldYOnPlayfield;
-        drawPlayfield();
+//        int oldXOnPlayfield = lastShape.xOnPlayfield;
+//        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        Rotation.rotateRight(lastShape);
+//        lastShape.xOnPlayfield = oldXOnPlayfield;
+//        lastShape.yOnPlayfield = oldYOnPlayfield;
+//        drawPlayfield();
     }
 
     public void rotate180() {
@@ -149,12 +149,12 @@ public class Playfield {
                 }
             }
         }
-        int oldXOnPlayfield = lastShape.xOnPlayfield;
-        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        lastShape = Rotation.rotate180(lastShape);
-        lastShape.xOnPlayfield = oldXOnPlayfield;
-        lastShape.yOnPlayfield = oldYOnPlayfield;
-        drawPlayfield();
+//        int oldXOnPlayfield = lastShape.xOnPlayfield;
+//        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        Rotation.rotate180(lastShape);
+//        lastShape.xOnPlayfield = oldXOnPlayfield;
+//        lastShape.yOnPlayfield = oldYOnPlayfield;
+//        drawPlayfield();
     }
 
     public int highestPointAtX(int x) {
