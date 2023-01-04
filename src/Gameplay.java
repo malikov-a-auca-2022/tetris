@@ -12,31 +12,31 @@ public class Gameplay extends PApplet {
         pf = new Playfield(menu, papplet);
 
         float cellSize = menu.getCellSize();
-//        shapes.add(new Shape(new int[][]{{0, 1, 0, 0},
-//                                         {0, 1, 1, 1}}, new int[]{5, 41, 185}, cellSize, papplet));
-//
-//        shapes.add(new Shape(new int[][]{{0, 0, 0, 0},
-//                                         {1, 1, 1, 1}}, new int[]{0, 255, 255}, cellSize, papplet));
-//
-//        shapes.add(new Shape(new int[][]{{0, 0, 0, 1},
-//                                         {0, 1, 1, 1}}, new int[]{255, 165, 0}, cellSize, papplet));
-//
-//        shapes.add(new Shape(new int[][]{{0, 1, 1, 0},
-//                                         {0, 1, 1, 0}}, new int[]{255, 255, 0}, cellSize, papplet));
+        shapes.add(new Shape(new int[][]{{0, 1, 0, 0},
+                                         {0, 1, 1, 1}}, new int[]{5, 41, 185}, cellSize, papplet));
+
+        shapes.add(new Shape(new int[][]{{0, 0, 0, 0},
+                                         {1, 1, 1, 1}}, new int[]{0, 255, 255}, cellSize, papplet));
+
+        shapes.add(new Shape(new int[][]{{0, 0, 0, 1},
+                                         {0, 1, 1, 1}}, new int[]{255, 165, 0}, cellSize, papplet));
+
+        shapes.add(new Shape(new int[][]{{0, 1, 1, 0},
+                                         {0, 1, 1, 0}}, new int[]{255, 255, 0}, cellSize, papplet));
 
         shapes.add(new Shape(new int[][]{{0, 1, 1, 0},
                                          {0, 0, 1, 1}}, new int[]{255, 0, 0}, cellSize, papplet));
 
-//        shapes.add(new Shape(new int[][]{{0, 0, 1, 0},
-//                                         {0, 1, 1, 1}}, new int[]{128, 0, 128}, cellSize, papplet));
-//
-//        shapes.add(new Shape(new int[][]{{0, 0, 1, 1},
-//                                         {0, 1, 1, 0}}, new int[]{0, 255, 0}, cellSize, papplet));
+        shapes.add(new Shape(new int[][]{{0, 0, 1, 0},
+                                         {0, 1, 1, 1}}, new int[]{128, 0, 128}, cellSize, papplet));
+
+        shapes.add(new Shape(new int[][]{{0, 0, 1, 1},
+                                         {0, 1, 1, 0}}, new int[]{0, 255, 0}, cellSize, papplet));
         pf.addShape(shapes.getRandomShape());
     }
 
     public void draw() {
-        if (pf.lastShapeHasSurfaceBelow()) {
+        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 15 == 0) {
             pf.addShape(shapes.getRandomShape());
         } else if (papplet.frameCount % 30 == 0) {
             pf.moveDown();
@@ -52,6 +52,7 @@ public class Gameplay extends PApplet {
             pf.moveRight();
         }
         if (papplet.key == 's' || papplet.key == 'S') {
+            if(pf.lastShapeHasSurfaceBelow()) return;
             pf.moveDown();
         }
         if (papplet.key == ' ') {

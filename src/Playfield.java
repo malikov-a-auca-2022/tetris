@@ -82,15 +82,6 @@ public class Playfield {
         lastShape.yOnPlayfield++;
     }
 
-    public void drawLastShape() {
-        papplet.fill(255);
-        papplet.rect(xLastShape, yLastShape, menu.getCellSize() * 4f, menu.getCellSize() * 2);
-        papplet.pushMatrix();
-        papplet.translate(xLastShape, yLastShape);
-        lastShape.drawShape(lastShape.getColor());
-        papplet.popMatrix();
-    }
-
     public boolean lastShapeHasSurfaceBelow() {
         if (lastShape.yOnPlayfield + 2 >= menu.getACTUAL_HEIGHT_CELLS()) {
             return true;
@@ -181,9 +172,11 @@ public class Playfield {
         xLastShape += menu.getCellSize();
 
     }
+
     public void drop() {
 
     }
+
     public void restart(Shapes shapes) {
         for (int i = 0; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
             for (int j = 0; j < menu.WIDTH_CELLS; j++) {
