@@ -93,26 +93,68 @@ public class Playfield {
                     if(i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
                             playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
                         return true;
-                    } else if (i == lastShape.getSHAPE_HEIGHT() && playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
+                    } else if (i == lastShape.getSHAPE_HEIGHT() &&
+                            playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
                         return true;
                     }
                 }
             }
         }
         return false;
-//        for (int j = 0; j <= lastShape.mostRightPoint; j++) {
-//            if (lastShape.getShape()[0][j]) {
-//                if (playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + j] && !lastShape.getShape()[1][j]) {
-//                    return true;
-//                }
-//            }
-//            if (lastShape.getShape()[1][j]) {
-//                if (playfield[lastShape.yOnPlayfield + 2][lastShape.xOnPlayfield + j]) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
+    }
+
+    public void rotateLeft() {
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
+                    colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
+                }
+            }
+        }
+        int oldXOnPlayfield = lastShape.xOnPlayfield;
+        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        lastShape = Rotation.rotateLeft(lastShape);
+        lastShape.xOnPlayfield = oldXOnPlayfield;
+        lastShape.yOnPlayfield = oldYOnPlayfield;
+        drawPlayfield();
+    }
+
+    public void rotateRight() {
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
+                    colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
+                }
+            }
+        }
+        int oldXOnPlayfield = lastShape.xOnPlayfield;
+        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        lastShape = Rotation.rotateRight(lastShape);
+        lastShape.xOnPlayfield = oldXOnPlayfield;
+        lastShape.yOnPlayfield = oldYOnPlayfield;
+        drawPlayfield();
+    }
+
+    public void rotate180() {
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
+                    colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
+                }
+            }
+        }
+        int oldXOnPlayfield = lastShape.xOnPlayfield;
+        int oldYOnPlayfield = lastShape.yOnPlayfield;
+        lastShape = Rotation.rotate180(lastShape);
+        lastShape.xOnPlayfield = oldXOnPlayfield;
+        lastShape.yOnPlayfield = oldYOnPlayfield;
+        drawPlayfield();
     }
 
     public int highestPointAtX(int x) {
@@ -122,17 +164,19 @@ public class Playfield {
         return -1;
     }
 
+    public void shadow() {
+
+    }
+
+    public void drop() {
+
+    }
+
     private void lose() {
         throw new RuntimeException("You lost: shapes got too high");
     }
 
     public void moveLeft() {
-//        if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop <= 0 ||
-//                lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom <= 0 ||
-//                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop - 1] ||
-//                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom - 1]) {
-//            return;
-//        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if (!lastShape.hasCellsInRow(i)){
                 continue;
@@ -169,12 +213,6 @@ public class Playfield {
     }
 
     public void moveRight() {
-//        if (lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom >= menu.WIDTH_CELLS - 1 ||
-//                lastShape.xOnPlayfield + lastShape.mostRightPointOnTop >= menu.WIDTH_CELLS - 1 ||
-//                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostRightPointOnTop + 1] ||
-//                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom + 1]) {
-//            return;
-//        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if (!lastShape.hasCellsInRow(i)) {
                 continue;
@@ -207,10 +245,6 @@ public class Playfield {
         }
         lastShape.xOnPlayfield++;
         xLastShape += menu.getCellSize();
-
-    }
-
-    public void drop() {
 
     }
 

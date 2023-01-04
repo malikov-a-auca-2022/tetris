@@ -75,5 +75,14 @@ public class  Gameplay extends PApplet {
         if (papplet.key == 'r' || papplet.key == 'R') {
             pf.restart(shapes);
         }
+        if (papplet.keyCode == LEFT) {
+            pf.rotateLeft();
+        }
+        if (papplet.keyCode == RIGHT) {
+            pf.rotateRight();
+        }
+        if (papplet.keyCode == UP) {
+            pf.rotate180();
+        }
     }
 }
