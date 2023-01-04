@@ -83,17 +83,18 @@ public class Playfield {
     }
 
     public boolean lastShapeHasSurfaceBelow() {
-        if(lastShape.yOnPlayfield + lastShape.lowestRow >= menu.getACTUAL_HEIGHT_CELLS() - 1) {
+        if (lastShape.yOnPlayfield + lastShape.lowestRow() >= menu.getACTUAL_HEIGHT_CELLS() - 1) {
             return true;
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
-                if(lastShape.getShape()[i][j]) {
-                    if(i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
+                if (lastShape.getShape()[i][j]) {
+                    if (i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
                             playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
                         return true;
-                    } else if (i == lastShape.getSHAPE_HEIGHT() &&
+                    }
+                    if (i == lastShape.getSHAPE_HEIGHT() - 1 &&
                             playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
                         return true;
                     }

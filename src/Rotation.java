@@ -8,7 +8,6 @@ public class Rotation {
             }
         }
         oldShape.SHAPE = oldShape.intArrToBoolArr(newShape);
-        oldShape.lowestRow = oldShape.lowestRow();
     }
 
     public static void rotateRight(Shape oldShape) {
@@ -19,7 +18,6 @@ public class Rotation {
             }
         }
         oldShape.SHAPE = oldShape.intArrToBoolArr(newShape);
-        oldShape.lowestRow = oldShape.lowestRow();
     }
     public static void rotate180(Shape oldShape) {
         rotateRight(oldShape);

@@ -51,25 +51,41 @@ public class Gameplay  {
         pf.addShape(shapes.getRandomShape());
     }
 
+    private int lastMovementFrameCount = 0;
+    private int movementOnSurfaceCounter = 0;
+
     public void draw() {
-        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 20 == 0) {
+        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20){
             pf.addShape(stableShapes.getRandomShape());
-        } else if (papplet.frameCount % 30 == 0) {
+            movementOnSurfaceCounter = 0;
+        } else if (movementOnSurfaceCounter >= 10) {
+            pf.addShape(stableShapes.getRandomShape());
+            movementOnSurfaceCounter = 0;
+        } else if (!pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 30 == 0 &&
+                (!papplet.keyPressed || (papplet.keyPressed && (papplet.key != 's' || papplet.key != 'S')))) {
             pf.moveDown();
+            lastMovementFrameCount = papplet.frameCount;
+            movementOnSurfaceCounter = 0;
         }
         pf.drawPlayfield();
     }
 
     public void keyPressed()  {
+        if (pf.lastShapeHasSurfaceBelow()) {
+            movementOnSurfaceCounter++;
+        }
         if (papplet.key == 'a' || papplet.key == 'A') {
             pf.moveLeft();
+            lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.key == 'd' || papplet.key == 'D') {
             pf.moveRight();
+            lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.key == 's' || papplet.key == 'S') {
             if(pf.lastShapeHasSurfaceBelow()) return;
             pf.moveDown();
+            lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.key == ' ') {
             pf.drop();
@@ -79,12 +95,15 @@ public class Gameplay  {
         }
         if (papplet.keyCode == papplet.LEFT) {
             pf.rotateLeft();
+            lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.keyCode == papplet.RIGHT) {
             pf.rotateRight();
+            lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.keyCode == papplet.UP) {
             pf.rotate180();
+            lastMovementFrameCount = papplet.frameCount;
         }
     }
 }
