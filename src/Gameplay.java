@@ -52,7 +52,7 @@ public class Gameplay  {
     }
 
     public void draw() {
-        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 15 == 0) {
+        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 20 == 0) {
             pf.addShape(stableShapes.getRandomShape());
         } else if (papplet.frameCount % 30 == 0) {
             pf.moveDown();

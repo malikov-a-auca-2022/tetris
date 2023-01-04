@@ -31,6 +31,7 @@ public class Shape implements Cloneable {
     public int xOnPlayfield, yOnPlayfield;
 
     public int mostLeftPoint, mostRightPoint;
+    public int lowestRow;
 
     Shape(int[][] shape, int[] color, float cellSize, PApplet papplet) {
         this.papplet = papplet;
@@ -54,6 +55,7 @@ public class Shape implements Cloneable {
                 }
             }
         }
+        lowestRow = lowestRow();
     }
 
     public Object clone()  {
@@ -80,6 +82,19 @@ public class Shape implements Cloneable {
             if(SHAPE[x][i]) return true;
         }
         return false;
+    }
+
+    public int lowestRow() {
+        int lowestRow = 0;
+        for (int i = 0; i < SHAPE_HEIGHT; i++) {
+            for (int j = 0; j < mostRightPoint; j++) {
+                if(SHAPE[i][j]) {
+                    lowestRow = Math.max(lowestRow, i);
+                    break;
+                }
+            }
+        }
+        return lowestRow;
     }
 
     public int mostLeftPointOnRow(int x) {

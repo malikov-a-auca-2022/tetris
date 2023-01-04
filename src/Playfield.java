@@ -83,7 +83,7 @@ public class Playfield {
     }
 
     public boolean lastShapeHasSurfaceBelow() {
-        if (lastShape.yOnPlayfield + 3 >= menu.getACTUAL_HEIGHT_CELLS()) {
+        if(lastShape.yOnPlayfield + lastShape.lowestRow >= menu.getACTUAL_HEIGHT_CELLS() - 1) {
             return true;
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
