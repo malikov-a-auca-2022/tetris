@@ -12,7 +12,7 @@ public class Shape {
         return SHAPE_HEIGHT;
     }
 
-    private final int SHAPE_HEIGHT = 2;
+    private final int SHAPE_HEIGHT = 4;
 
     private final boolean[][] SHAPE;
 
@@ -30,13 +30,15 @@ public class Shape {
     PApplet papplet;
     public int xOnPlayfield, yOnPlayfield;
 
+    public int mostLeftPoint, mostRightPoint;
+
     Shape(int[][] shape, int[] color, float cellSize, PApplet papplet) {
         this.papplet = papplet;
         this.cellSize = cellSize;
-        if (shape.length != 2 || shape[0].length != 4) {
+        if (shape.length != 4 || shape[0].length != 4) {
             throw new RuntimeException("Wrong size of shape: size must be [2][4]");
         }
-        SHAPE = new boolean[2][4];
+        SHAPE = new boolean[4][4];
         for (int i = 0; i < SHAPE_HEIGHT; i++) {
             for (int j = 0; j < SHAPE_WIDTH; j++) {
                 SHAPE[i][j] = shape[i][j] == 1;
@@ -46,49 +48,37 @@ public class Shape {
 
         COLOR = color;
 
-        mostLeftPointOnBottom = mostLeftPointOnBottom();
-        mostRightPointOnBottom = mostRightPointOnBottom();
-
-        mostLeftPointOnTop = mostLeftPointOnTop();
-        mostRightPointOnTop = mostRightPointOnTop();
-
-        mostLeftPoint = Math.min(mostLeftPointOnBottom, mostLeftPointOnTop);
-        mostRightPoint = Math.max(mostRightPointOnBottom, mostRightPointOnTop);
+        mostRightPoint = -1;
+        mostLeftPoint = SHAPE_WIDTH;
+        for (int i = 0; i < SHAPE_HEIGHT; i++) {
+            if (!hasCellsInRow(i)) continue;
+            for (int j = 0; j < SHAPE_WIDTH; j++) {
+                if (SHAPE[i][j]) {
+                    mostRightPoint = Math.max(mostRightPoint, j);
+                    mostLeftPoint = Math.min(mostLeftPoint, j);
+                }
+            }
+        }
     }
-    
-    public boolean hasCellsInThisRow(int y) {
-        if(y != 0 && y != 1) throw new RuntimeException("Invalid row number: it should either 0 or 1");
+
+    public boolean hasCellsInRow(int x) {
+        if(x < 0 || x > 3) throw new RuntimeException("Invalid row number: it should either 0 or 1");
         for (int i = 0; i < SHAPE_WIDTH; i++) {
-            if(SHAPE[y][i]) return true;
+            if(SHAPE[x][i]) return true;
         }
         return false;
     }
 
-    public int mostLeftPointOnBottom, mostRightPointOnBottom;
-    public int mostLeftPointOnTop, mostRightPointOnTop;
-    public int mostLeftPoint, mostRightPoint;
-
-    private int mostLeftPointOnBottom() {
-        for(int i = 0; i < SHAPE_WIDTH; i++) {
-            if(SHAPE[1][i]) return i;
-        }
-        return -1;
-    }
-    private int mostRightPointOnBottom() {
-        for(int i = SHAPE_WIDTH - 1; i >= 0; i--) {
-            if(SHAPE[1][i]) return i;
-        }
-        return -1;
-    }
-    private int mostLeftPointOnTop() {
+    public int mostLeftPointOnRow(int x) {
         for (int i = 0; i < SHAPE_WIDTH; i++) {
-            if(SHAPE[0][i]) return i;
+            if (SHAPE[x][i]) return i;
         }
-        return 0;
+        return -1;
     }
-    private int mostRightPointOnTop() {
-        for (int i = SHAPE_WIDTH - 1; i >= 0; i--) {
-            if(SHAPE[0][i]) return i;
+
+    public int mostRightPointOnRow(int x){
+        for(int i = SHAPE_WIDTH - 1; i >= 0; i--) {
+            if (SHAPE[x][i]) return i;
         }
         return -1;
     }

@@ -40,7 +40,7 @@ public class Playfield {
         xLastShape = menu.getXPlayfield() + 3 * menu.getCellSize();
         lastShape.xOnPlayfield = 3;
         yLastShape = menu.getYPlayfieldActual();
-        lastShape.yOnPlayfield = 0;
+        lastShape.yOnPlayfield = 0; //change it to 1
     }
 
     public void drawPlayfield() {
@@ -61,8 +61,8 @@ public class Playfield {
 
     public void moveDown() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
                     colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
@@ -70,8 +70,8 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j] = true;
                     colorOfCell[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j] = lastShape.getColor();
@@ -83,22 +83,36 @@ public class Playfield {
     }
 
     public boolean lastShapeHasSurfaceBelow() {
-        if (lastShape.yOnPlayfield + 2 >= menu.getACTUAL_HEIGHT_CELLS()) {
+        if (lastShape.yOnPlayfield + 3 >= menu.getACTUAL_HEIGHT_CELLS()) {
             return true;
         }
-        for (int j = 0; j <= lastShape.mostRightPoint; j++) {
-            if (lastShape.getShape()[0][j]) {
-                if (playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + j] && !lastShape.getShape()[1][j]) {
-                    return true;
-                }
-            }
-            if (lastShape.getShape()[1][j]) {
-                if (playfield[lastShape.yOnPlayfield + 2][lastShape.xOnPlayfield + j]) {
-                    return true;
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    if(i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
+                            playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
+                        return true;
+                    } else if (i == lastShape.getSHAPE_HEIGHT() && playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
+//        for (int j = 0; j <= lastShape.mostRightPoint; j++) {
+//            if (lastShape.getShape()[0][j]) {
+//                if (playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + j] && !lastShape.getShape()[1][j]) {
+//                    return true;
+//                }
+//            }
+//            if (lastShape.getShape()[1][j]) {
+//                if (playfield[lastShape.yOnPlayfield + 2][lastShape.xOnPlayfield + j]) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
     }
 
     public int highestPointAtX(int x) {
@@ -113,16 +127,29 @@ public class Playfield {
     }
 
     public void moveLeft() {
-        if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop <= 0 ||
-                lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom <= 0 ||
-                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop - 1] ||
-                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom - 1]) {
-            return;
+//        if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop <= 0 ||
+//                lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom <= 0 ||
+//                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostLeftPointOnTop - 1] ||
+//                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostLeftPointOnBottom - 1]) {
+//            return;
+//        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if (lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) <= 0) {
+                return;
+            }
+            if (!lastShape.hasCellsInRow(i)){
+                continue;
+            }
+            if (playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + lastShape.mostLeftPointOnRow(i) - 1]) {
+                return;
+            }
         }
+//        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+//        }
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnBottom || j <= lastShape.mostRightPointOnTop; j++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
                     colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
@@ -130,8 +157,8 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnBottom || j <= lastShape.mostRightPointOnTop; j++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j - 1] = true;
                     colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j - 1] = lastShape.getColor();
@@ -144,15 +171,30 @@ public class Playfield {
     }
 
     public void moveRight() {
-        if (lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom >= menu.WIDTH_CELLS - 1 ||
-                lastShape.xOnPlayfield + lastShape.mostRightPointOnTop >= menu.WIDTH_CELLS - 1 ||
-                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostRightPointOnTop + 1] ||
-                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom + 1]) {
-            return;
-        }
+//        if (lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom >= menu.WIDTH_CELLS - 1 ||
+//                lastShape.xOnPlayfield + lastShape.mostRightPointOnTop >= menu.WIDTH_CELLS - 1 ||
+//                playfield[lastShape.yOnPlayfield][lastShape.xOnPlayfield + lastShape.mostRightPointOnTop + 1] ||
+//                playfield[lastShape.yOnPlayfield + 1][lastShape.xOnPlayfield + lastShape.mostRightPointOnBottom + 1]) {
+//            return;
+//        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnBottom || j <= lastShape.mostRightPointOnTop; j++) {
+            if (!lastShape.hasCellsInRow(i)) continue;
+            if (lastShape.xOnPlayfield + getLastShape().mostRightPointOnRow(i) >= menu.WIDTH_CELLS - 1) {
+                return;
+            }
+        }
+        for (int i = 0; i < lastShape.getSHAPE_WIDTH(); i++) {
+            if (!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if (playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + lastShape.mostRightPointOnRow(i) + 1]) {
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = false;
                     colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
@@ -160,8 +202,8 @@ public class Playfield {
             }
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
-            if(!lastShape.hasCellsInThisRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnBottom || j <= lastShape.mostRightPointOnTop; j++) {
+            if(!lastShape.hasCellsInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPoint; j++) {
                 if(lastShape.getShape()[i][j]) {
                     playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j + 1] = true;
                     colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j + 1] = lastShape.getColor();

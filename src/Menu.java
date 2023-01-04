@@ -8,7 +8,7 @@ class Menu {
     public int getACTUAL_HEIGHT_CELLS() {
         return ACTUAL_HEIGHT_CELLS;
     }
-    private final int ACTUAL_HEIGHT_CELLS = 22;
+    private final int ACTUAL_HEIGHT_CELLS = 24;
 
     private float cellSize;
 
@@ -53,7 +53,7 @@ class Menu {
         playfieldWidth = cellSize * WIDTH_CELLS;
         xPlayfield = (papplet.width - playfieldWidth) / 2f;
         yPlayfield = (papplet.height - playfieldHeight) / 2f;
-        yPlayfieldActual = yPlayfield - 2f * cellSize;
+        yPlayfieldActual = yPlayfield - (ACTUAL_HEIGHT_CELLS - HEIGHT_CELLS) * cellSize;
         stroke = cellSize / 20f;
     }
 
