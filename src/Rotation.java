@@ -35,6 +35,7 @@ public class Rotation {
             }
         }
         for (int i = 0; i < oldShape.getSHAPE_HEIGHT(); i++) {
+
             for (int j = 0; j < oldShape.getSHAPE_WIDTH(); j++) {
                 if (newShape[i][j] == 1) {
                     if (oldShape.yOnPlayfield + i >= menu.getACTUAL_HEIGHT_CELLS() - 1 ||
