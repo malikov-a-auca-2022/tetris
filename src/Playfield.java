@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 
 public class Playfield {
-    private boolean[][] playfield;
+    public boolean[][] playfield;
     private int[][][] colorOfCell;
     private Menu menu;
     private PApplet papplet;
@@ -116,7 +116,7 @@ public class Playfield {
         }
 //        int oldXOnPlayfield = lastShape.xOnPlayfield;
 //        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        Rotation.rotateLeft(lastShape);
+        Rotation.rotateLeft(lastShape, menu, this);
 //        lastShape.xOnPlayfield = oldXOnPlayfield;
 //        lastShape.yOnPlayfield = oldYOnPlayfield;
 //        drawPlayfield();
@@ -134,7 +134,7 @@ public class Playfield {
         }
 //        int oldXOnPlayfield = lastShape.xOnPlayfield;
 //        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        Rotation.rotateRight(lastShape);
+        Rotation.rotateRight(lastShape, menu, this);
 //        lastShape.xOnPlayfield = oldXOnPlayfield;
 //        lastShape.yOnPlayfield = oldYOnPlayfield;
 //        drawPlayfield();
@@ -152,7 +152,7 @@ public class Playfield {
         }
 //        int oldXOnPlayfield = lastShape.xOnPlayfield;
 //        int oldYOnPlayfield = lastShape.yOnPlayfield;
-        Rotation.rotate180(lastShape);
+        Rotation.rotate180(lastShape, menu, this);
 //        lastShape.xOnPlayfield = oldXOnPlayfield;
 //        lastShape.yOnPlayfield = oldYOnPlayfield;
 //        drawPlayfield();
