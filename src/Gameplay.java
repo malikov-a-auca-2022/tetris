@@ -48,19 +48,24 @@ public class Gameplay  {
     private int movementOnSurfaceCounter = 0;
 
     public void draw() {
-        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20){
-            pf.addShape(stableShapes.getRandomShape());
-            movementOnSurfaceCounter = 0;
-        } else if (movementOnSurfaceCounter >= 10) {
-            pf.addShape(stableShapes.getRandomShape());
-            movementOnSurfaceCounter = 0;
-        } else if (!pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 30 == 0 &&
-                (!papplet.keyPressed || (papplet.keyPressed && (papplet.key != 's' || papplet.key != 'S')))) {
+//        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20){
+//            pf.addShape(stableShapes.getRandomShape());
+//            movementOnSurfaceCounter = 0;
+//        } else if (movementOnSurfaceCounter >= 10) {
+//            pf.addShape(stableShapes.getRandomShape());
+//            movementOnSurfaceCounter = 0;
+//        } else if (!pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 30 == 0 &&
+//                (!papplet.keyPressed || (papplet.keyPressed && (papplet.key != 's' || papplet.key != 'S')))) {
+//            pf.moveDown();
+//            lastMovementFrameCount = papplet.frameCount;
+//            movementOnSurfaceCounter = 0;
+//        }
+//        pf.drawPlayfield();
+        if (papplet.frameCount % 30 == 0) {
             pf.moveDown();
-            lastMovementFrameCount = papplet.frameCount;
-            movementOnSurfaceCounter = 0;
         }
         pf.drawPlayfield();
+
     }
 
     public void keyPressed()  {

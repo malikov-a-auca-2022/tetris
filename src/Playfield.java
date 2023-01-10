@@ -40,7 +40,7 @@ public class Playfield {
         xLastShape = menu.getXPlayfield() + 3 * menu.getCellSize();
         lastShape.xOnPlayfield = 3;
         yLastShape = menu.getYPlayfieldActual();
-        lastShape.yOnPlayfield = 0; //change it to 1
+        lastShape.yOnPlayfield = 0;
     }
 
     public void drawPlayfield() {
@@ -88,7 +88,7 @@ public class Playfield {
         }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellInRow(i)) continue;
-            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+            for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
                 if (lastShape.getShape()[i][j]) {
                     if (i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
                             playfield[lastShape.yOnPlayfield + i + 1][lastShape.xOnPlayfield + j]) {

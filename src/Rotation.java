@@ -24,7 +24,7 @@ public class Rotation {
             }
         }
 
-        oldShape.SHAPE = oldShape.intArrToBoolArr(newShape);
+        oldShape.shape = oldShape.intArrToBoolArr(newShape);
     }
 
     public static void rotateRight(Shape oldShape, Menu menu, Playfield pf) {
@@ -50,7 +50,7 @@ public class Rotation {
                 }
             }
         }
-        oldShape.SHAPE = oldShape.intArrToBoolArr(newShape);
+        oldShape.shape = oldShape.intArrToBoolArr(newShape);
     }
     public static void rotate180(Shape oldShape, Menu menu, Playfield pf) {
         rotateRight(oldShape, menu, pf);
