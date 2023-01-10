@@ -32,13 +32,13 @@ public class Playfield {
     public void addShape(Shape shape)  {
         lastShape = (Shape) shape.clone();
         int xToBeInMiddle = (menu.WIDTH_CELLS - shape.getSHAPE_WIDTH()) / 2;
+        int yToAppearAboveVisible = menu.getACTUAL_HEIGHT_CELLS() - menu.HEIGHT_CELLS - shape.getSHAPE_HEIGHT();
         for (int i = 0; i < shape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < shape.getSHAPE_WIDTH(); j++) {
-                playfield[i][xToBeInMiddle + j] = shape.getShape()[i][j];
-                colorOfCell[i][xToBeInMiddle + j] = shape.getColor();
+                playfield[yToAppearAboveVisible + i][xToBeInMiddle + j] = shape.getShape()[i][j];
+                colorOfCell[yToAppearAboveVisible + i][xToBeInMiddle + j] = shape.getColor();
             }
         }
-        int yToAppearAboveVisible = menu.getACTUAL_HEIGHT_CELLS() - menu.HEIGHT_CELLS - shape.getSHAPE_HEIGHT();
         xLastShape = menu.getXPlayfield() + xToBeInMiddle * menu.getCellSize();
         lastShape.xOnPlayfield = xToBeInMiddle;
         yLastShape = menu.getYPlayfieldActual() + yToAppearAboveVisible * menu.getCellSize();
