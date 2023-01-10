@@ -260,4 +260,28 @@ public class Playfield {
         }
         addShape(shapes.getRandomShape());
     }
+
+    public void burnLines() {
+        for (int i = menu.getACTUAL_HEIGHT_CELLS() - 1; i >= 0; i--) {
+            boolean lineIsFull = true;
+            for (int j = 0; j < menu.WIDTH_CELLS; j++) {
+                if (!playfield[i][j]) {
+                    lineIsFull = false;
+                    break;
+                }
+            }
+            if(lineIsFull) {
+                burnLine(i);
+                i++;
+            }
+        }
+    }
+    public void burnLine(int y) {
+        for (int i = y; i >= menu.getACTUAL_HEIGHT_CELLS() - menu.HEIGHT_CELLS; i--) {
+            for (int j = 0; j < menu.WIDTH_CELLS; j++) {
+                playfield[i][j] = playfield[i - 1][j];
+                colorOfCell[i][j] = colorOfCell[i - 1][j];
+            }
+        }
+    }
 }

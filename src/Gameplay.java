@@ -49,9 +49,11 @@ public class Gameplay  {
 
     public void draw() {
         if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20){
+            pf.burnLines();
             pf.addShape(stableShapes.getRandomShape());
             movementOnSurfaceCounter = 0;
         } else if (movementOnSurfaceCounter >= 10) {
+            pf.burnLines();
             pf.addShape(stableShapes.getRandomShape());
             movementOnSurfaceCounter = 0;
         } else if (!pf.lastShapeHasSurfaceBelow() && papplet.frameCount % 30 == 0 &&
