@@ -105,6 +105,27 @@ public class Playfield {
         }
         return false;
     }
+    public boolean lastShapeHasSurfaceBelow(int y) {
+        if (y + lastShape.lowestRow() >= menu.getACTUAL_HEIGHT_CELLS() - 1) {
+            return true;
+        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellInRow(i)) continue;
+            for (int j = 0; j < lastShape.getSHAPE_WIDTH(); j++) {
+                if (lastShape.getShape()[i][j]) {
+                    if (i != lastShape.getSHAPE_HEIGHT() - 1 && !lastShape.getShape()[i + 1][j] &&
+                            playfield[y + i + 1][lastShape.xOnPlayfield + j]) {
+                        return true;
+                    }
+                    if (i == lastShape.getSHAPE_HEIGHT() - 1 &&
+                            playfield[y + i + 1][lastShape.xOnPlayfield + j]) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     public void rotateLeft() {
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
@@ -172,7 +193,32 @@ public class Playfield {
     }
 
     public void drop() {
-
+        int oldY = lastShape.yOnPlayfield;
+        for (int i = lastShape.yOnPlayfield; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
+            if(lastShapeHasSurfaceBelow(i)) {
+                lastShape.yOnPlayfield = i;
+                break;
+            }
+        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[oldY + i][lastShape.xOnPlayfield + j] = false;
+                    colorOfCell[oldY + i][lastShape.xOnPlayfield + j] = new int[]{0, 0, 0};
+                }
+            }
+        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    playfield[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = true;
+                    colorOfCell[lastShape.yOnPlayfield + i][lastShape.xOnPlayfield + j] = lastShape.getColor();
+                }
+            }
+        }
+        yLastShape = menu.getYPlayfield() + lastShape.yOnPlayfield * menu.getCellSize();
     }
 
     private void lose() {

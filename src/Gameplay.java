@@ -48,11 +48,7 @@ public class Gameplay  {
     private int movementOnSurfaceCounter = 0;
 
     public void draw() {
-        if (pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20){
-            pf.burnLines();
-            pf.addShape(stableShapes.getRandomShape());
-            movementOnSurfaceCounter = 0;
-        } else if (movementOnSurfaceCounter >= 10) {
+        if ((pf.lastShapeHasSurfaceBelow() && papplet.frameCount - lastMovementFrameCount >= 20) || movementOnSurfaceCounter >= 10) {
             pf.burnLines();
             pf.addShape(stableShapes.getRandomShape());
             movementOnSurfaceCounter = 0;
@@ -85,6 +81,7 @@ public class Gameplay  {
         }
         if (papplet.key == ' ') {
             pf.drop();
+            movementOnSurfaceCounter = 10;
         }
         if (papplet.key == 'r' || papplet.key == 'R') {
            pf.restart(stableShapes);
