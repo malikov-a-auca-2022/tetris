@@ -35,8 +35,10 @@ public class Playfield {
         int yToAppearAboveVisible = menu.getACTUAL_HEIGHT_CELLS() - menu.HEIGHT_CELLS - shape.getSHAPE_HEIGHT();
         for (int i = 0; i < shape.getSHAPE_HEIGHT(); i++) {
             for (int j = 0; j < shape.getSHAPE_WIDTH(); j++) {
-                playfield[yToAppearAboveVisible + i][xToBeInMiddle + j] = shape.getShape()[i][j];
-                colorOfCell[yToAppearAboveVisible + i][xToBeInMiddle + j] = shape.getColor();
+                if(shape.getShape()[i][j]) {
+                    playfield[yToAppearAboveVisible + i][xToBeInMiddle + j] = true;
+                    colorOfCell[yToAppearAboveVisible + i][xToBeInMiddle + j] = shape.getColor();
+                }
             }
         }
         xLastShape = menu.getXPlayfield() + xToBeInMiddle * menu.getCellSize();
@@ -46,18 +48,16 @@ public class Playfield {
     }
 
     public void drawPlayfield() {
-        for(int i = 0; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
+        for(int i = menu.getACTUAL_HEIGHT_CELLS() - menu.HEIGHT_CELLS; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
             for (int j = 0; j < menu.WIDTH_CELLS; j++) {
-//                if(playfield[i][j]) {
-                    papplet.noStroke();
-                    papplet.pushMatrix();
-                    int[] rgb = colorOfCell[i][j];
-                    papplet.fill(rgb[0], rgb[1], rgb[2]);
-                    papplet.translate(menu.getXPlayfield(), menu.getYPlayfieldActual());
-                    float cellSize = menu.getCellSize();
-                    papplet.rect(cellSize * j, cellSize * i, cellSize, cellSize);
-                    papplet.popMatrix();
-//                }
+                papplet.noStroke();
+                papplet.pushMatrix();
+                int[] rgb = colorOfCell[i][j];
+                papplet.fill(rgb[0], rgb[1], rgb[2]);
+                papplet.translate(menu.getXPlayfield(), menu.getYPlayfieldActual());
+                float cellSize = menu.getCellSize();
+                papplet.rect(cellSize * j, cellSize * i, cellSize, cellSize);
+                papplet.popMatrix();
             }
         }
         shadow();
