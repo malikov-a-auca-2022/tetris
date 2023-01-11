@@ -67,12 +67,10 @@ public class Gameplay  {
             movementOnSurfaceCounter++;
         }
         if (papplet.key == 'a' || papplet.key == 'A') {
-            pf.unshadow();
             pf.moveLeft();
             lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.key == 'd' || papplet.key == 'D') {
-            pf.unshadow();
             pf.moveRight();
             lastMovementFrameCount = papplet.frameCount;
         }

@@ -198,10 +198,14 @@ public class Playfield {
                 break;
             }
         }
+        if(yOnSurface == lastShape.yOnPlayfield) {
+            return;
+        }
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellInRow(i)) continue;
             for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
                 if(lastShape.getShape()[i][j]) {
+                    if(playfield[yOnSurface + i][lastShape.xOnPlayfield + j]) continue;
                     colorOfCell[yOnSurface + i][lastShape.xOnPlayfield + j] = new int[] {80, 80, 80};
                 }
             }
@@ -270,6 +274,7 @@ public class Playfield {
                 return;
             }
         }
+        unshadow();
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellInRow(i)) continue;
@@ -306,6 +311,7 @@ public class Playfield {
                 return;
             }
         }
+        unshadow();
 
         for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
             if(!lastShape.hasCellInRow(i)) continue;
