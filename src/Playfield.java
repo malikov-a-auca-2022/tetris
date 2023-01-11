@@ -48,7 +48,8 @@ public class Playfield {
     public void drawPlayfield() {
         for(int i = 0; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
             for (int j = 0; j < menu.WIDTH_CELLS; j++) {
-                if(playfield[i][j]) {
+//                if(playfield[i][j]) {
+                    papplet.noStroke();
                     papplet.pushMatrix();
                     int[] rgb = colorOfCell[i][j];
                     papplet.fill(rgb[0], rgb[1], rgb[2]);
@@ -56,9 +57,10 @@ public class Playfield {
                     float cellSize = menu.getCellSize();
                     papplet.rect(cellSize * j, cellSize * i, cellSize, cellSize);
                     papplet.popMatrix();
-                }
+//                }
             }
         }
+        shadow();
     }
 
     public void moveDown() {
@@ -189,7 +191,38 @@ public class Playfield {
     }
 
     public void shadow() {
-
+        int yOnSurface = 0;
+        for (int i = lastShape.yOnPlayfield; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
+            if(lastShapeHasSurfaceBelow(i)) {
+                yOnSurface = i;
+                break;
+            }
+        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    colorOfCell[yOnSurface + i][lastShape.xOnPlayfield + j] = new int[] {80, 80, 80};
+                }
+            }
+        }
+    }
+    public void unshadow() {
+        int yOnSurface = 0;
+        for (int i = lastShape.yOnPlayfield; i < menu.getACTUAL_HEIGHT_CELLS(); i++) {
+            if(lastShapeHasSurfaceBelow(i)) {
+                yOnSurface = i;
+                break;
+            }
+        }
+        for (int i = 0; i < lastShape.getSHAPE_HEIGHT(); i++) {
+            if(!lastShape.hasCellInRow(i)) continue;
+            for (int j = 0; j <= lastShape.mostRightPointOnRow(i); j++) {
+                if(lastShape.getShape()[i][j]) {
+                    colorOfCell[yOnSurface + i][lastShape.xOnPlayfield + j] = new int[] {0, 0, 0};
+                }
+            }
+        }
     }
 
     public void drop() {

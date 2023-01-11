@@ -67,10 +67,12 @@ public class Gameplay  {
             movementOnSurfaceCounter++;
         }
         if (papplet.key == 'a' || papplet.key == 'A') {
+            pf.unshadow();
             pf.moveLeft();
             lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.key == 'd' || papplet.key == 'D') {
+            pf.unshadow();
             pf.moveRight();
             lastMovementFrameCount = papplet.frameCount;
         }
@@ -84,17 +86,20 @@ public class Gameplay  {
             movementOnSurfaceCounter = 10;
         }
         if (papplet.key == 'r' || papplet.key == 'R') {
-           pf.restart(stableShapes);
+            pf.restart(stableShapes);
         }
         if (papplet.keyCode == papplet.LEFT) {
+            pf.unshadow();
             pf.rotateLeft();
             lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.keyCode == papplet.RIGHT) {
+            pf.unshadow();
             pf.rotateRight();
             lastMovementFrameCount = papplet.frameCount;
         }
         if (papplet.keyCode == papplet.UP) {
+            pf.unshadow();
             pf.rotate180();
             lastMovementFrameCount = papplet.frameCount;
         }
